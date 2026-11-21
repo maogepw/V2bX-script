@@ -38,9 +38,9 @@ arch=$(uname -m)
 if [[ $arch == "x86_64" || $arch == "x64" || $arch == "amd64" ]]; then
     arch="64"
 elif [[ $arch == "aarch64" || $arch == "arm64" ]]; then
-    arch="arm64-v8a"
+    arch="arm64"
 elif [[ $arch == "s390x" ]]; then
-    arch="s390x"
+    echo -e "${red}当前发布版不再提供 s390x 构建，请使用 x86_64 或 arm64 设备${plain}\n" && exit 1
 else
     arch="64"
     echo -e "${red}检测架构失败，使用默认架构: ${arch}${plain}"
