@@ -825,7 +825,9 @@ EOF
     "servers": [
       {
         "tag": "cf",
-        "address": "1.1.1.1"
+        "type": "udp",
+        "server": "1.1.1.1",
+        "server_port": 53
       }
     ],
     "strategy": "$dnsstrategy"

@@ -160,6 +160,12 @@ install_V2bX() {
     mkdir /etc/V2bX/ -p
     cp geoip.dat /etc/V2bX/
     cp geosite.dat /etc/V2bX/
+    # 旧版 sing_origin.json 的 DNS 为 sing-box 1.12 前的旧格式，1.14 已移除，自动迁移
+    if [[ -f /etc/V2bX/sing_origin.json ]] && grep -q '"address": "1.1.1.1"' /etc/V2bX/sing_origin.json; then
+        cp /etc/V2bX/sing_origin.json /etc/V2bX/sing_origin.json.bak
+        sed -i 's/"address": "1.1.1.1"/"type": "udp", "server": "1.1.1.1", "server_port": 53/' /etc/V2bX/sing_origin.json
+        echo -e "${yellow}检测到 sing_origin.json 旧版 DNS 格式，已自动迁移为新格式（备份：sing_origin.json.bak）${plain}"
+    fi
     if [[ x"${release}" == x"alpine" ]]; then
         rm /etc/init.d/V2bX -f
         cat <<EOF > /etc/init.d/V2bX
